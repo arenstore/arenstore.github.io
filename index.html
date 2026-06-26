@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aren Store | Modern & Simple</title>
+    <link rel="icon" href="https://res-console.cloudinary.com/duvshv0em/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/TE9HT19CR19SVl9zODZ6dXk=/template_primary">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="https://res-console.cloudinary.com/duvshv0em/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/TE9HT19CR19XSF9mMmZ0YXA=/template_primary" alt="Aren Store Logo" class="logo">
+            <span class="store-name">Aren Store</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#voucher-section" class="btn-primary">Get Voucher</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="banner-container">
+            <img src="https://res-console.cloudinary.com/duvshv0em/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YmFubmVyX2ZiX3NwdDVlbg==/template_primary" alt="Aren Store Banner" class="banner">
+            <div class="hero-content">
+                <h1>Minimal. Aesthetic. Yours.</h1>
+                <p>Discover products designed for the modern lifestyle.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="shop">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="placeholder-img"></div>
+                <h3>Matte Minimalist Mug</h3>
+                <p>$18.00</p>
+                <button class="btn-secondary">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="placeholder-img"></div>
+                <h3>Soft-Glow Desk Lamp</h3>
+                <p>$45.00</p>
+                <button class="btn-secondary">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <div class="placeholder-img"></div>
+                <h3>Rounded Planner</h3>
+                <p>$22.00</p>
+                <button class="btn-secondary">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="voucher-section" class="voucher-wrapper">
+        <div class="voucher-container">
+            <h2>Claim Your Sealed Voucher</h2>
+            <p>Fill out the form to generate your unique voucher. Download it and send it to our Messenger chat to claim your discount!</p>
+            
+            <form id="voucherForm">
+                <input type="text" id="userName" placeholder="Full Name" required>
+                <input type="email" id="userEmail" placeholder="Email Address" required>
+                <button type="submit" class="btn-primary">Generate Voucher</button>
+            </form>
+
+            <div id="voucherResult" class="hidden">
+                <div class="sealed-voucher">
+                    <div class="voucher-header">🎁 Aren Store Sealed Voucher</div>
+                    <div class="voucher-body">
+                        <p><strong>Name:</strong> <span id="v-name"></span></p>
+                        <p><strong>Secret Code:</strong> <span id="v-code" class="code"></span></p>
+                    </div>
+                    <div class="voucher-footer">
+                        Instruction: Download this voucher and send the image to our Facebook Messenger to activate!
+                    </div>
+                </div>
+                <button id="downloadBtn" class="btn-primary">⬇ Download Voucher Image</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Aren Store. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
