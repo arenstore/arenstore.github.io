@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aren Store™ - Premium Shopping</title>
+    <!-- Favicon / Website Tab Logo -->
+    <link rel="icon" type="image/png" href="https://i.ibb.co.com/jvsPr9NL/LOGO-BG-RV.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AlpineJS for state management -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Hind Siliguri for English + Bangla typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+        }
+        [x-cloak] { display: none !important; }
+        /* Smooth Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff7ed;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fed7aa;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f97316;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900 selection:bg-orange-500 selection:text-white" x-data="arenStore()">
+
+    <!-- Top Alert Bar -->
+    <div class="bg-orange-950 text-orange-100 py-2.5 px-4 text-center text-xs font-semibold tracking-wider uppercase flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
+        <span>⚡ Order now & send screenshot to Messenger for lightning fast delivery! ⚡</span>
+        <div class="flex items-center gap-3 mt-1 sm:mt-0 border-t sm:border-t-0 sm:border-l border-orange-800/60 pt-1 sm:pt-0 sm:pl-6">
+            <a href="https://www.facebook.com/profile.php?id=61591441259144" target="_blank" class="hover:text-white transition-colors flex items-center gap-1">
+                <i class="fa-brands fa-facebook text-sm text-orange-400"></i> <span class="normal-case">Aren Store</span>
+            </a>
+            <span class="text-orange-800">|</span>
+            <a href="https://www.youtube.com/@ArenStoreBD" target="_blank" class="hover:text-white transition-colors flex items-center gap-1">
+                <i class="fa-brands fa-youtube text-sm text-orange-400"></i> <span class="normal-case">@ArenStoreBD</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-orange-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo & Name -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <img src="https://i.ibb.co.com/dJzRJ7qS/LOGO-BG-WH.png" alt="Aren Store™" class="h-12 w-12 object-contain rounded-xl p-1 bg-orange-50 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                <span class="text-xl sm:text-2xl font-black tracking-tight bg-gradient-to-r from-orange-600 via-amber-600 to-orange-800 bg-clip-text text-transparent">
+                    Aren Store<span class="text-orange-600 font-normal">™</span>
+                </span>
+            </a>
+
+            <!-- Nav Links (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-600">
+                <a href="#home" class="hover:text-orange-600 transition-colors">Home</a>
+                <a href="#products" class="hover:text-orange-600 transition-colors">Products</a>
+                <a href="#delivery-info" class="hover:text-orange-600 transition-colors">How to Order</a>
+                <a href="#about" class="hover:text-orange-600 transition-colors">Why Choose Us</a>
+            </nav>
+
+            <!-- Interactive Action Icons -->
+            <div class="flex items-center space-x-4">
+                <!-- Search bar (styled visually) -->
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Search premium items..." class="bg-stone-100 border border-stone-200 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500 w-48 transition-all">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-stone-400 text-xs"></i>
+                </div>
+
+                <!-- Shopping Cart Icon with Badge -->
+                <button @click="isCartOpen = true" class="relative p-2.5 text-stone-700 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-all focus:outline-none" aria-label="Open Shopping Cart">
+                    <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                    <span x-show="cartTotalItems() > 0" x-transition.scale x-text="cartTotalItems()" class="absolute -top-1 -right-1 bg-orange-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Clean Full-Width Hero Banner (Updated to scale natively and display 100% of the image) -->
+        <section id="home" class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-md bg-stone-100 mb-10 transition-all duration-300 border border-orange-100/50">
+            <img src="https://i.ibb.co.com/KxLLsC88/Aren-Syore-banner-1-1.png" alt="Aren Store Premium Banner" class="w-full h-auto block object-contain">
+        </section>
+
+        <!-- Core Value Propositions - Simplified & Clean -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="bg-white p-4 rounded-2xl border border-stone-100 flex items-center space-x-3.5 shadow-sm">
+                <div class="p-2.5 bg-orange-50 rounded-xl text-orange-600">
+                    <i class="fa-solid fa-truck-fast text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs sm:text-sm text-stone-800">Fast Delivery</h4>
+                    <p class="text-[10px] text-stone-500">Fastest courier nationwide</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-stone-100 flex items-center space-x-3.5 shadow-sm">
+                <div class="p-2.5 bg-amber-50 rounded-xl text-amber-600">
+                    <i class="fa-solid fa-shield-halved text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs sm:text-sm text-stone-800">100% Genuine</h4>
+                    <p class="text-[10px] text-stone-500">Strict quality assurance</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-stone-100 flex items-center space-x-3.5 shadow-sm">
+                <div class="p-2.5 bg-orange-50 rounded-xl text-orange-600">
+                    <i class="fa-solid fa-headset text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs sm:text-sm text-stone-800">Quick Response</h4>
+                    <p class="text-[10px] text-stone-500">Active Messenger support</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-stone-100 flex items-center space-x-3.5 shadow-sm">
+                <div class="p-2.5 bg-emerald-50 rounded-xl text-emerald-600">
+                    <i class="fa-solid fa-hand-holding-dollar text-lg sm:text-xl"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs sm:text-sm text-stone-800">Cash on Delivery</h4>
+                    <p class="text-[10px] text-stone-500">Pay at your doorstep</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Premium Products Section -->
+        <section id="products" class="mb-16">
+            <div class="text-center max-w-xl mx-auto mb-10">
+                <span class="text-xs font-bold text-orange-600 uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full">Our Collection</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-stone-950 mt-2">Premium Selected Products</h2>
+                <p class="text-stone-500 text-xs sm:text-sm mt-1.5">Add products to your cart and check out securely. Remember to share the screenshot on Messenger for fast approval!</p>
+            </div>
+
+            <!-- Products Showcase (Dual Multi-gallery setup) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <template x-for="product in products" :key="product.id">
+                    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-5 sm:p-6 flex flex-col justify-between hover:shadow-md transition-all duration-300">
+                        <!-- Top status badge -->
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-bold px-2.5 py-0.5 bg-orange-100 text-orange-800 rounded-full flex items-center gap-1">
+                                <i class="fa-solid fa-fire"></i> Best Seller
+                            </span>
+                            <span class="text-xs font-medium text-emerald-600 flex items-center gap-1">
+                                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> In Stock
+                            </span>
+                        </div>
+
+                        <!-- Image Swapper Gallery Component -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                            <!-- Left Thumbnails -->
+                            <div class="md:col-span-3 flex md:flex-col gap-2 order-2 md:order-1 overflow-x-auto pb-2 md:pb-0">
+                                <template x-for="(img, idx) in product.images" :key="idx">
+                                    <button @click="product.activeImage = img" 
+                                            :class="product.activeImage === img ? 'border-2 border-orange-500 scale-95' : 'border border-stone-200 hover:border-stone-400'" 
+                                            class="w-14 h-14 md:w-full aspect-square rounded-lg overflow-hidden bg-stone-50 transition-all flex-shrink-0">
+                                        <img :src="img" alt="Thumbnail" class="w-full h-full object-cover">
+                                    </button>
+                                </template>
+                            </div>
+
+                            <!-- Right Main Preview Area -->
+                            <div class="md:col-span-9 order-1 md:order-2 bg-stone-50 rounded-xl overflow-hidden aspect-square flex items-center justify-center relative group">
+                                <img :src="product.activeImage" :alt="product.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute bottom-2.5 right-2.5 bg-black/55 text-white text-[10px] px-2 py-1 rounded backdrop-blur-sm pointer-events-none">
+                                    <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Interactive Gallery
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description Details -->
+                        <div class="mt-5 space-y-2.5">
+                            <h3 class="text-lg sm:text-xl font-extrabold text-stone-900 hover:text-orange-600 transition-colors" x-text="product.name"></h3>
+                            
+                            <div class="flex items-center space-x-1 text-amber-500">
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <span class="text-[11px] text-stone-400 font-medium ml-1.5">(4.9 Satisfied Ratings)</span>
+                            </div>
+
+                            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed" x-text="product.description"></p>
+                            
+                            <!-- Key Highlights Bullet Points -->
+                            <div class="pt-2">
+                                <h4 class="text-[10px] font-bold text-stone-400 tracking-wider uppercase mb-1.5">Key Highlights:</h4>
+                                <ul class="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-stone-600 font-medium">
+                                    <template x-for="highlight in product.highlights" :key="highlight">
+                                        <li class="flex items-center space-x-1.5">
+                                            <i class="fa-solid fa-circle-check text-orange-500 text-[10px]"></i>
+                                            <span x-text="highlight"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Price Tag & CTA Controls -->
+                        <div class="mt-5 pt-4 border-t border-stone-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                            <div>
+                                <span class="text-xs font-medium text-stone-400 line-through block" x-text="'৳' + product.originalPrice"></span>
+                                <span class="text-xl sm:text-2xl font-black text-orange-600" x-text="'৳' + product.price"></span>
+                                <span class="text-[10px] font-bold text-emerald-600 ml-1" x-text="'Save ৳' + (product.originalPrice - product.price)"></span>
+                            </div>
+                            
+                            <div class="flex items-center gap-2">
+                                <button @click="addToCart(product)" class="flex-1 sm:flex-initial px-4 py-2.5 bg-orange-50 hover:bg-orange-100 text-orange-700 font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                </button>
+                                <button @click="buyNow(product)" class="flex-1 sm:flex-initial px-5 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold rounded-xl shadow-sm hover:shadow-md transition-all text-xs flex items-center justify-center gap-1.5 transform active:scale-95">
+                                    ⚡ Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+        </section>
+
+        <!-- Order Instructions Guide Banner -->
+        <section id="delivery-info" class="mb-16 bg-gradient-to-br from-orange-950 to-stone-900 rounded-2xl p-6 sm:p-10 text-white shadow-md relative overflow-hidden">
+            <!-- Subtle gradient circle -->
+            <div class="absolute -right-24 -bottom-24 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-5">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-orange-500/30 text-orange-300 border border-orange-400/25">
+                        📌 Delivery Guide / অর্ডার গাইড
+                    </span>
+                    <h2 class="text-xl sm:text-3xl font-extrabold tracking-tight">
+                        Simple Ordering Steps <br>
+                        <span class="text-orange-400">অর্ডার করুন মাত্র ৪টি সহজ ধাপে</span>
+                    </h2>
+                    
+                    <div class="space-y-3.5">
+                        <div class="flex items-start space-x-3.5">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500/30 text-white flex items-center justify-center font-bold text-xs border border-orange-500/50">1</span>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-white">Add products or click "Buy Now"</h4>
+                                <p class="text-[11px] text-stone-300">প্রথমে পছন্দের প্রোডাক্ট কার্ট-এ যোগ করুন অথবা "Buy Now" চাপুন।</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3.5">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500/30 text-white flex items-center justify-center font-bold text-xs border border-orange-500/50">2</span>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-white">Fill out Delivery Details</h4>
+                                <p class="text-[11px] text-stone-300">আপনার নাম, মোবাইল নাম্বার এবং সঠিক ডেলিভারি ঠিকানা দিন।</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3.5">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500/30 text-white flex items-center justify-center font-bold text-xs border border-orange-500/50">3</span>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-orange-400 font-extrabold">🚨 Take a Screenshot of the Final Receipt</h4>
+                                <p class="text-[11px] text-stone-300">অর্ডার কনফার্ম করার পর যে রিসিট বা রশিদ স্ক্রিন আসবে সেটির একটি স্ক্রিনশট নিন।</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3.5">
+                            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500/30 text-white flex items-center justify-center font-bold text-xs border border-orange-500/50">4</span>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm text-orange-400 font-extrabold">💬 Send the Screenshot to our Messenger</h4>
+                                <p class="text-[11px] text-stone-300">স্ক্রিনশটটি আমাদের ফেসবুক মেসেঞ্জারে পাঠিয়ে দিন। আমরা সাথে সাথে অর্ডারটি কনফার্ম করে দেব।</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Messenger Promo box -->
+                <div class="lg:col-span-5 bg-white/5 rounded-xl border border-white/10 p-5 sm:p-6 text-center space-y-4">
+                    <div class="w-14 h-14 mx-auto bg-orange-500 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/20 animate-bounce">
+                        <i class="fa-brands fa-facebook-messenger"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-base font-bold">Fast Messenger Support</h3>
+                        <p class="text-[11px] text-stone-300 leading-relaxed">
+                            Once we receive your receipt screenshot inside our chat, we process your shipment within minutes!
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 pt-1">
+                        <a href="https://www.facebook.com/profile.php?id=61591441259144" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 transition-all text-white font-semibold py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-facebook text-orange-400"></i> Follow Aren Store on Facebook
+                        </a>
+                        <a href="https://www.youtube.com/@ArenStoreBD" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 transition-all text-white font-semibold py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-youtube text-orange-400"></i> Subscribe to @ArenStoreBD
+                        </a>
+                    </div>
+                    <div class="pt-2 border-t border-white/10 flex justify-between text-[11px] text-stone-400">
+                        <div>
+                            <span class="block font-bold text-white">Inside Dhaka</span>
+                            <span>৳৬০ (১-২ দিন)</span>
+                        </div>
+                        <div class="border-l border-white/10 px-4">
+                            <span class="block font-bold text-white">Outside Dhaka</span>
+                            <span>৳১২০ (২-৩ দিন)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section - Premium & Simple -->
+        <section id="about" class="mb-10 py-8 border-t border-stone-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-3">
+                    <span class="text-[10px] font-bold text-orange-600 uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full">About Aren Store</span>
+                    <h3 class="text-2xl font-extrabold text-stone-900">Your Trusted Premium Shop</h3>
+                    <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                        Aren Store™ specializes in procuring top-tier electronic items and authentic sport jerseys. We focus on premium quality, simple direct checkout options, and extremely friendly, helpful customer support.
+                    </p>
+                    <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                        Follow our official socials to stay updated with fresh premium drop collections, unboxings, and deals!
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-1">
+                        <a href="https://www.facebook.com/profile.php?id=61591441259144" target="_blank" class="inline-flex items-center gap-1.5 bg-orange-50 hover:bg-orange-100 text-orange-800 text-xs font-semibold py-2 px-3.5 rounded-lg border border-orange-200 transition-colors">
+                            <i class="fa-brands fa-facebook text-orange-600 text-sm"></i> Facebook Page
+                        </a>
+                        <a href="https://www.youtube.com/@ArenStoreBD" target="_blank" class="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-800 text-xs font-semibold py-2 px-3.5 rounded-lg border border-red-200 transition-colors">
+                            <i class="fa-brands fa-youtube text-red-600 text-sm"></i> YouTube Channel
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-orange-50/40 rounded-2xl p-6 border border-orange-100 grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                        <span class="block text-2xl font-black text-orange-600">5k+</span>
+                        <span class="text-[10px] text-stone-500 font-bold uppercase tracking-wider block mt-1">Customers</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                        <span class="block text-2xl font-black text-amber-500">24/7</span>
+                        <span class="text-[10px] text-stone-500 font-bold uppercase tracking-wider block mt-1">Live Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Slide-over shopping cart drawer -->
+    <div x-show="isCartOpen" class="fixed inset-0 z-50 overflow-hidden" x-cloak>
+        <div class="absolute inset-0 bg-stone-900/40 backdrop-blur-sm transition-opacity" @click="isCartOpen = false"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between"
+                 x-transition:enter="transform transition ease-in-out duration-300"
+                 x-transition:enter-start="translate-x-full"
+                 x-transition:enter-end="translate-x-0"
+                 x-transition:leave="transform transition ease-in-out duration-300"
+                 x-transition:leave-start="translate-x-0"
+                 x-transition:leave-end="translate-x-full">
+                
+                <!-- Drawer Header -->
+                <div class="p-5 border-b border-stone-100 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-basket-shopping text-orange-600 text-lg"></i>
+                        <h3 class="text-base font-bold text-stone-900">Your Shopping Cart</h3>
+                    </div>
+                    <button @click="isCartOpen = false" class="p-1.5 text-stone-400 hover:text-stone-600 rounded-full hover:bg-stone-100 transition-colors">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Content -->
+                <div class="flex-1 overflow-y-auto p-5 space-y-4">
+                    <template x-if="cart.length === 0">
+                        <div class="text-center py-12 space-y-3">
+                            <div class="text-stone-300">
+                                <i class="fa-solid fa-bag-shopping text-5xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-800 text-sm">Your cart is empty</h4>
+                                <p class="text-[11px] text-stone-400 mt-0.5">Add items from the store to configure checkout details!</p>
+                            </div>
+                            <button @click="isCartOpen = false" class="px-4 py-2 bg-orange-600 text-white rounded-lg text-xs font-semibold hover:bg-orange-700">
+                                Browse Products
+                            </button>
+                        </div>
+                    </template>
+
+                    <!-- Cart Item Rows -->
+                    <template x-for="item in cart" :key="item.product.id">
+                        <div class="flex items-center space-x-3.5 bg-stone-50 p-2.5 rounded-xl border border-stone-100 relative group">
+                            <!-- Image -->
+                            <img :src="item.product.images[0]" :alt="item.product.name" class="w-12 h-12 rounded-lg object-cover bg-white">
+                            
+                            <!-- Texts & Quantity adjustment -->
+                            <div class="flex-1 space-y-1">
+                                <h4 class="font-bold text-xs text-stone-800 line-clamp-1" x-text="item.product.name"></h4>
+                                <span class="text-xs font-bold text-orange-600 block" x-text="'৳' + item.product.price"></span>
+                                
+                                <div class="flex items-center space-x-2">
+                                    <button @click="changeQty(item.product.id, -1)" class="w-5.5 h-5.5 bg-white border border-stone-200 rounded flex items-center justify-center text-stone-600 hover:bg-stone-100 text-xxs">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <span class="text-xs font-bold text-stone-800" x-text="item.qty"></span>
+                                    <button @click="changeQty(item.product.id, 1)" class="w-5.5 h-5.5 bg-white border border-stone-200 rounded flex items-center justify-center text-stone-600 hover:bg-stone-100 text-xxs">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remove item button -->
+                            <button @click="removeFromCart(item.product.id)" class="text-stone-400 hover:text-orange-600 p-1.5 transition-colors">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Drawer Footer -->
+                <div class="p-5 border-t border-stone-100 bg-stone-50 space-y-4">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between text-xs text-stone-600">
+                            <span>Subtotal</span>
+                            <span class="font-bold text-stone-900" x-text="'৳' + cartSubtotal()"></span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-stone-600">
+                            <span>Shipping</span>
+                            <span class="font-bold text-stone-900" x-text="'৳' + shippingCost"></span>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-stone-200 pt-2 text-sm font-extrabold text-stone-900">
+                            <span>Grand Total</span>
+                            <span class="text-orange-600 text-base" x-text="'৳' + cartGrandTotal()"></span>
+                        </div>
+                    </div>
+
+                    <button @click="startCheckout()" :disabled="cart.length === 0" class="w-full py-3 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:opacity-50 text-white font-extrabold text-xs rounded-xl tracking-wide flex items-center justify-center gap-1.5 shadow-sm transition-all transform active:scale-95">
+                        📦 Proceed to Checkout
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery Form & Checkout Details Modal -->
+    <div x-show="isCheckoutOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto" x-cloak>
+        <div class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm" @click="isCheckoutOpen = false"></div>
+        
+        <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-xl relative z-10 border border-stone-100"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95">
+            
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-stone-100 flex items-center justify-between sticky top-0 bg-white z-20">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-truck-ramp-box text-orange-600 text-lg"></i>
+                    <h3 class="text-base font-bold text-stone-900">Complete Delivery Details</h3>
+                </div>
+                <button @click="isCheckoutOpen = false" class="p-1.5 text-stone-400 hover:text-stone-600 rounded-full hover:bg-stone-100 transition-colors">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form Body -->
+            <form @submit.prevent="submitOrder()" class="p-5 space-y-5">
+                <!-- Order Items Summary Box -->
+                <div class="bg-stone-50 p-3.5 rounded-xl border border-stone-100 space-y-1.5">
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1.5">Order Summary:</h4>
+                    <template x-for="item in cart" :key="item.product.id">
+                        <div class="flex items-center justify-between text-xs font-medium text-stone-700">
+                            <span x-text="item.product.name + ' x ' + item.qty"></span>
+                            <span class="font-bold text-stone-950" x-text="'৳' + (item.product.price * item.qty)"></span>
+                        </div>
+                    </template>
+                    <div class="border-t border-stone-200 pt-1.5 flex justify-between text-xs font-extrabold text-orange-600">
+                        <span>Total Payable (including delivery)</span>
+                        <span x-text="'৳' + cartGrandTotal()"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-3.5">
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-100 pb-1">Customer Details</h4>
+                    
+                    <!-- Customer Name -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-stone-700 uppercase" for="name">Your Full Name / আপনার নাম <span class="text-orange-600">*</span></label>
+                        <input type="text" id="name" x-model="checkoutForm.name" required placeholder="e.g. Tanvir Rahman" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs">
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-stone-700 uppercase" for="phone">Active Mobile Number / সচল মোবাইল নং <span class="text-orange-600">*</span></label>
+                        <input type="tel" id="phone" x-model="checkoutForm.phone" required placeholder="e.g. 017XXXXXXXX" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs">
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-stone-700 uppercase" for="address">Full Delivery Address / পূর্ণাঙ্গ ডেলিভারি ঠিকানা <span class="text-orange-600">*</span></label>
+                        <textarea id="address" x-model="checkoutForm.address" rows="2" required placeholder="House, Road, Area, Thana, District" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-xs"></textarea>
+                    </div>
+
+                    <!-- Shipping Location Select -->
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-stone-700 uppercase">Delivery Location / ডেলিভারি এলাকা <span class="text-orange-600">*</span></label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label :class="checkoutForm.insideDhaka ? 'border-orange-500 bg-orange-50/40' : 'border-stone-200 bg-white'" class="border rounded-lg p-2.5 flex items-center justify-between cursor-pointer hover:border-orange-300 transition-all">
+                                <input type="radio" :checked="checkoutForm.insideDhaka" @click="setShipping(true)" class="text-orange-600 focus:ring-orange-500">
+                                <div class="text-left ml-2">
+                                    <span class="block text-[10px] font-bold text-stone-800">Inside Dhaka / ঢাকার ভিতরে</span>
+                                    <span class="text-[9px] font-semibold text-stone-500">Fee: ৳60</span>
+                                </div>
+                            </label>
+                            <label :class="!checkoutForm.insideDhaka ? 'border-orange-500 bg-orange-50/40' : 'border-stone-200 bg-white'" class="border rounded-lg p-2.5 flex items-center justify-between cursor-pointer hover:border-orange-300 transition-all">
+                                <input type="radio" :checked="!checkoutForm.insideDhaka" @click="setShipping(false)" class="text-orange-600 focus:ring-orange-500">
+                                <div class="text-left ml-2">
+                                    <span class="block text-[10px] font-bold text-stone-800">Outside Dhaka / ঢাকার বাইরে</span>
+                                    <span class="text-[9px] font-semibold text-stone-500">Fee: ৳120</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Selection Block -->
+                <div class="space-y-3.5">
+                    <h4 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-stone-100 pb-1">Payment Method / পেমেন্ট পদ্ধতি</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Cash on Delivery Option -->
+                        <label :class="checkoutForm.paymentMethod === 'cod' ? 'border-orange-500 bg-orange-50/20' : 'border-stone-200 bg-white'" class="border rounded-xl p-3 flex items-start space-x-2.5 cursor-pointer hover:border-orange-300 transition-all">
+                            <input type="radio" value="cod" x-model="checkoutForm.paymentMethod" class="mt-0.5 text-orange-600 focus:ring-orange-500">
+                            <div>
+                                <span class="block text-xs font-bold text-stone-800">Cash On Delivery</span>
+                                <span class="text-[10px] text-stone-500 block leading-tight">ক্যাশ অন ডেলিভারি (হাতে পেয়ে মূল্য দিন)</span>
+                            </div>
+                        </label>
+                        <!-- bKash Option -->
+                        <label :class="checkoutForm.paymentMethod === 'bkash' ? 'border-pink-500 bg-pink-50/20' : 'border-stone-200 bg-white'" class="border rounded-xl p-3 flex items-start space-x-2.5 cursor-pointer hover:border-pink-300 transition-all">
+                            <input type="radio" value="bkash" x-model="checkoutForm.paymentMethod" class="mt-0.5 text-pink-600 focus:ring-pink-500">
+                            <div>
+                                <span class="block text-xs font-bold text-stone-800">bKash (Send Money)</span>
+                                <span class="text-[10px] text-stone-500 block leading-tight">বিকাশ পেমেন্ট (সেন্ড মানি করুন)</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- bKash Send Money Details Box -->
+                    <div x-show="checkoutForm.paymentMethod === 'bkash'" x-transition.opacity class="bg-pink-50 border border-pink-100 p-3.5 rounded-xl space-y-2 text-stone-800 text-[11px]">
+                        <p class="font-bold text-pink-700">bKash Payment Process / বিকাশ পেমেন্ট পদ্ধতি:</p>
+                        <p>1. Please Send Money of the total amount (<span class="font-bold text-orange-600" x-text="'৳' + cartGrandTotal()"></span>) to our official personal bKash number: <span class="font-bold select-all bg-pink-100 px-1 py-0.5 rounded text-pink-800 text-xs">017XXXXXXXX</span></p>
+                        <p>2. Enter your bKash Transaction ID and Phone Number below: / নিচে তথ্য দিন:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <label class="block font-bold text-[9px] text-stone-600 mb-0.5">Your Sender bKash No.</label>
+                                <input type="text" x-model="checkoutForm.bkashSender" placeholder="01XXXXXXXXX" class="w-full px-3 py-1.5 bg-white border border-pink-200 rounded-lg text-xs focus:ring-pink-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-[9px] text-stone-600 mb-0.5">Transaction ID (TxnID)</label>
+                                <input type="text" x-model="checkoutForm.bkashTxnId" placeholder="e.g. A9B8C7D6E5" class="w-full px-3 py-1.5 bg-white border border-pink-200 rounded-lg text-xs focus:ring-pink-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs rounded-xl tracking-wide flex items-center justify-center gap-1.5 shadow-sm transition-all transform active:scale-95">
+                    ✔️ Finalize Order / অর্ডার কনফার্ম করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Success Receipt Modal with Screenshot callout -->
+    <div x-show="isSuccessOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-stone-900/80 backdrop-blur-md" x-cloak>
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl relative z-10 border-4 border-orange-500 p-5 sm:p-7 space-y-5"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100">
+            
+            <!-- Confetti / Success Header -->
+            <div class="text-center space-y-1.5">
+                <div class="w-12 h-12 mx-auto bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-xl font-black text-stone-900">Order Placed Successfully!</h3>
+                <p class="text-[11px] text-stone-500">Your custom invoice statement has been successfully processed.</p>
+            </div>
+
+            <!-- MANDATORY DUAL LANGUAGE SCREENSHOT WARNING -->
+            <div class="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 p-1 rounded-xl shadow-md">
+                <div class="bg-white px-3.5 py-4 rounded-lg text-center space-y-3">
+                    <!-- Bangla Instructions -->
+                    <div class="space-y-0.5">
+                        <span class="inline-block bg-orange-100 text-orange-600 font-bold text-[9px] px-2 py-0.5 rounded-full">বাংলা নির্দেশিকা</span>
+                        <h4 class="text-base sm:text-lg font-black text-stone-900 leading-tight">
+                            🚨 নিচের রিসিটের একটি <span class="text-orange-600 underline">স্ক্রিনশট নিন</span> এবং মেসেঞ্জারে পাঠান!
+                        </h4>
+                        <p class="text-[11px] font-bold text-stone-700">
+                            আমাদের গ্রুপ খুব দ্রুত আপনার অর্ডারটি ডেলিভারির জন্য প্রস্তুত করবে।
+                        </p>
+                    </div>
+
+                    <div class="border-t border-stone-200"></div>
+
+                    <!-- English Instructions -->
+                    <div class="space-y-0.5">
+                        <span class="inline-block bg-orange-100 text-orange-600 font-bold text-[9px] px-2 py-0.5 rounded-full">ENGLISH GUIDE</span>
+                        <h4 class="text-base sm:text-lg font-black text-stone-900 leading-tight">
+                            💬 Take a <span class="text-orange-600 underline">Screenshot</span> of this information & send it to our Messenger!
+                        </h4>
+                        <p class="text-[11px] font-bold text-stone-700">
+                            Our Messenger Group will respond to you extremely fast.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoice Details Card Box -->
+            <div id="receipt-card" class="border border-stone-200 bg-stone-50 p-4 rounded-xl space-y-3">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-200 pb-2.5 gap-1.5">
+                    <div>
+                        <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Order ID</span>
+                        <span class="block text-xs font-mono font-bold text-orange-600" x-text="receipt.orderId"></span>
+                    </div>
+                    <div>
+                        <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest block text-left sm:text-right">Date & Time</span>
+                        <span class="block text-[11px] font-bold text-stone-700" x-text="receipt.dateTime"></span>
+                    </div>
+                </div>
+
+                <!-- Customer Details Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                    <div>
+                        <span class="font-bold text-stone-400 block uppercase text-[9px]">Customer Name:</span>
+                        <span class="font-bold text-stone-800" x-text="receipt.name"></span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-stone-400 block uppercase text-[9px]">Mobile No / ফোন নং:</span>
+                        <span class="font-bold text-stone-800 select-all" x-text="receipt.phone"></span>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <span class="font-bold text-stone-400 block uppercase text-[9px]">Delivery Address / ঠিকানা:</span>
+                        <span class="font-medium text-stone-800" x-text="receipt.address"></span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-stone-400 block uppercase text-[9px]">Payment Method:</span>
+                        <span class="inline-block px-2 py-0.5 bg-orange-100 text-orange-800 rounded font-bold uppercase text-[9px]" x-text="receipt.paymentMethod"></span>
+                    </div>
+                    <div x-show="receipt.paymentMethod === 'bKash Send Money'">
+                        <span class="font-bold text-pink-700 block uppercase text-[9px]">bKash Verified Sender:</span>
+                        <span class="font-mono font-semibold text-pink-700 text-[10px]" x-text="'No: ' + receipt.bkashSender + ' | Tx: ' + receipt.bkashTxnId"></span>
+                    </div>
+                </div>
+
+                <!-- Items list -->
+                <div class="border-t border-stone-200 pt-2.5">
+                    <span class="font-bold text-stone-400 block uppercase text-[9px] mb-1.5">Purchased Items:</span>
+                    <div class="space-y-1 text-[11px]">
+                        <template x-for="item in receipt.items" :key="item.name">
+                            <div class="flex justify-between font-medium text-stone-700">
+                                <span x-text="item.name + ' (Qty: ' + item.qty + ')'"></span>
+                                <span class="font-bold text-stone-900" x-text="'৳' + item.total"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Total due -->
+                <div class="border-t border-stone-200 pt-2 flex justify-between items-center">
+                    <span class="text-xs font-extrabold text-stone-800">Grand Total Payable:</span>
+                    <span class="text-lg font-black text-orange-600" x-text="'৳' + receipt.grandTotal"></span>
+                </div>
+            </div>
+
+            <!-- Interactive bottom buttons -->
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-1.5">
+                <!-- Messenger Redirection button (pointed to official Page Inbox directly) -->
+                <a href="https://m.me/61591441259144" target="_blank" class="flex-1 py-3 bg-[#f97316] hover:bg-[#ea580c] text-white font-black text-xs rounded-xl flex items-center justify-center gap-2 shadow-md shadow-orange-500/20 transition-all transform active:scale-95">
+                    <i class="fa-brands fa-facebook-messenger text-base"></i> Send Screenshot to Messenger Group
+                </a>
+                
+                <button @click="copyOrderSummary()" class="py-3 px-4 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-copy"></i> Copy Receipt Text
+                </button>
+                
+                <button @click="closeSuccessModal()" class="py-3 px-4 bg-orange-50 hover:bg-orange-100 text-orange-700 font-bold text-xs rounded-xl transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast message container -->
+    <div x-show="toast.show" 
+         x-transition:enter="transform transition ease-out duration-300"
+         x-transition:enter-start="translate-y-2 opacity-0"
+         x-transition:enter-end="translate-y-0 opacity-100"
+         x-transition:leave="transform transition ease-in duration-200"
+         x-transition:leave-start="translate-y-0 opacity-100"
+         x-transition:leave-end="translate-y-2 opacity-0"
+         class="fixed bottom-5 right-5 z-50 max-w-sm w-full bg-stone-950 text-white px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2.5 border border-stone-800"
+         x-cloak>
+        <span class="p-1.5 bg-orange-500 rounded-lg text-white">
+            <i class="fa-solid fa-bell text-xs"></i>
+        </span>
+        <div class="flex-1">
+            <p class="text-xs font-semibold" x-text="toast.message"></p>
+        </div>
+        <button @click="toast.show = false" class="text-stone-400 hover:text-white">
+            <i class="fa-solid fa-times text-[10px]"></i>
+        </button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-stone-900 text-stone-400 py-10 mt-16 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Branding column -->
+                <div class="md:col-span-2 space-y-3">
+                    <a href="#" class="flex items-center space-x-2.5">
+                        <img src="https://i.ibb.co.com/dJzRJ7qS/LOGO-BG-WH.png" alt="Aren Store™" class="h-9 w-9 object-contain rounded-lg p-0.5 bg-white">
+                        <span class="text-base font-black tracking-tight text-white">Aren Store™</span>
+                    </a>
+                    <p class="text-xs text-stone-400 max-w-sm leading-relaxed">
+                        Aren Store™ is a premium online boutique operating in Bangladesh. Simply select products, place an order, screenshot the invoice slip, and send it directly to our Messenger chat for lightning-speed shipment.
+                    </p>
+                    <div class="flex space-x-4 text-stone-400 pt-2">
+                        <a href="https://www.facebook.com/profile.php?id=61591441259144" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5 text-xs">
+                            <i class="fa-brands fa-facebook text-base text-orange-500"></i> Facebook
+                        </a>
+                        <a href="https://www.youtube.com/@ArenStoreBD" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5 text-xs">
+                            <i class="fa-brands fa-youtube text-base text-red-500"></i> YouTube
+                        </a>
+                        <a href="https://m.me/61591441259144" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5 text-xs">
+                            <i class="fa-brands fa-facebook-messenger text-base text-blue-500"></i> Messenger
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation Columns -->
+                <div>
+                    <h4 class="text-white font-bold text-xs tracking-wider uppercase mb-3">Shop Pages</h4>
+                    <ul class="space-y-1.5 text-xs">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home Page</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Products Catalog</a></li>
+                        <li><a href="#delivery-info" class="hover:text-white transition-colors">Order Steps</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Hotline Contacts -->
+                <div>
+                    <h4 class="text-white font-bold text-xs tracking-wider uppercase mb-3">Customer Contacts</h4>
+                    <ul class="space-y-1.5 text-xs">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-orange-400"></i>
+                            <span>Contact/Support: Aren Store</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-envelope text-orange-400"></i>
+                            <span>support@arenstore.com</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-brands fa-facebook-messenger text-orange-400"></i>
+                            <a href="https://m.me/61591441259144" target="_blank" class="hover:underline">m.me/61591441259144</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Disclaimer -->
+            <div class="border-t border-stone-800 mt-10 pt-5 flex flex-col sm:flex-row items-center justify-between text-[10px] text-stone-500 gap-3">
+                <p>© 2026 Aren Store™. All Rights Reserved. Custom designed for premium Messenger checkouts.</p>
+                <div class="flex space-x-3">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function arenStore() {
+            return {
+                // Cart operational properties
+                cart: [],
+                isCartOpen: false,
+                isCheckoutOpen: false,
+                isSuccessOpen: false,
+                shippingCost: 60, // Standard inside Dhaka delivery fee
+
+                // Toast dynamic notice message
+                toast: {
+                    show: false,
+                    message: ''
+                },
+
+                // Delivery information reactive form model
+                checkoutForm: {
+                    name: '',
+                    phone: '',
+                    address: '',
+                    insideDhaka: true,
+                    paymentMethod: 'cod', // options: 'cod' or 'bkash'
+                    bkashSender: '',
+                    bkashTxnId: ''
+                },
+
+                // Success statement data
+                receipt: {
+                    orderId: '',
+                    dateTime: '',
+                    name: '',
+                    phone: '',
+                    address: '',
+                    paymentMethod: '',
+                    bkashSender: '',
+                    bkashTxnId: '',
+                    items: [],
+                    grandTotal: 0
+                },
+
+                // Products array
+                products: [
+                    {
+                        id: 'p1',
+                        name: 'Cute 2-in-1 Rechargeable Mini Fan with LED Light',
+                        description: 'Stay cool and glowing wherever you go! This ultra-portable, adorable mini handheld fan features a powerful rechargeable motor with adjustable speeds and a warm built-in LED ring light. Perfect for studying, outdoor outings, and emergency power-cuts.',
+                        price: 650,
+                        originalPrice: 850,
+                        images: [
+                            'https://binzahidmarket.com/cdn/shop/files/2in1-cute-mini-fan-led-light-481.jpg?v=1755598225&width=',
+                            'https://binzahidmarket.com/cdn/shop/files/2in1-cute-mini-fan-led-light-709.jpg?v=1755598241&width=',
+                            'https://binzahidmarket.com/cdn/shop/files/2in1-cute-mini-fan-led-light-603.jpg?v=1755598269&width=',
+                            'https://binzahidmarket.com/cdn/shop/files/2in1-cute-mini-fan-led-light-519.jpg?v=1755598222&width='
+                        ],
+                        activeImage: 'https://binzahidmarket.com/cdn/shop/files/2in1-cute-mini-fan-led-light-481.jpg?v=1755598225&width=',
+                        highlights: [
+                            'Built-in Warm Glow LED Light',
+                            'Rechargeable USB Cable Included',
+                            'Multi-Speed Whisper Quiet Motor',
+                            'Comfort Handheld Portable Design'
+                        ]
+                    },
+                    {
+                        id: 'p2',
+                        name: 'Argentina 2026 Home Messi Authentic Jersey - Premium Edition',
+                        description: 'Wear the ultimate legacy of Lionel Messi with the official Argentina 2026 Home Authentic Jersey. Fabricated with high-grade, moisture-wicking engineered athletic fabric, featuring heat-applied Argentine Federation emblem, gold FIFA World Champion badge, and iconic Messi #10 graphic layout.',
+                        price: 1200,
+                        originalPrice: 1600,
+                        images: [
+                            'https://assets.adidas.com/images/e_trim:EAEEEF/c_lpad,w_iw,h_ih/b_rgb:EAEEEF/w_180,f_auto,q_auto,fl_lossy,c_fill,g_auto/44ad9429d16a46ffb404df292923d173_9366/Argentina_26_Home_Authentic_Jersey_White_JM5897_HM53.jpg',
+                            'https://assets.adidas.com/images/e_trim:EAEEEF/c_lpad,w_iw,h_ih/b_rgb:EAEEEF/w_180,f_auto,q_auto,fl_lossy,c_fill,g_auto/d552a37adbb04324b42683b6644da7c8_9366/Argentina_26_Home_Messi_Authentic_Jersey_White_KH3934_HM3.jpg',
+                            'https://assets.adidas.com/images/w_600,f_auto,q_auto/0ac02566788e499188104ad09bbad5a8_9366/Argentina_26_Home_Authentic_Kids_Jersey_White_KA4285_01_laydown.jpg'
+                        ],
+                        activeImage: 'https://assets.adidas.com/images/e_trim:EAEEEF/c_lpad,w_iw,h_ih/b_rgb:EAEEEF/w_180,f_auto,q_auto,fl_lossy,c_fill,g_auto/44ad9429d16a46ffb404df292923d173_9366/Argentina_26_Home_Authentic_Jersey_White_JM5897_HM53.jpg',
+                        highlights: [
+                            'Official Messi 10 Heat-applied graphics',
+                            'Premium Moisture-Wicking Sports Knit',
+                            'Gold Centered FIFA Champion Badge',
+                            'Pro Athletic Slim Silhouette Cut'
+                        ]
+                    }
+                ],
+
+                // Notification service
+                showToast(msg) {
+                    this.toast.message = msg;
+                    this.toast.show = true;
+                    setTimeout(() => {
+                        this.toast.show = false;
+                    }, 4000);
+                },
+
+                // Cart modifications
+                addToCart(product) {
+                    const existingItem = this.cart.find(item => item.product.id === product.id);
+                    if (existingItem) {
+                        existingItem.qty++;
+                    } else {
+                        this.cart.push({
+                            product: product,
+                            qty: 1
+                        });
+                    }
+                    this.showToast(`"${product.name}" added to cart!`);
+                },
+
+                buyNow(product) {
+                    const existingItem = this.cart.find(item => item.product.id === product.id);
+                    if (!existingItem) {
+                        this.cart.push({
+                            product: product,
+                            qty: 1
+                        });
+                    }
+                    this.isCartOpen = false;
+                    this.startCheckout();
+                },
+
+                removeFromCart(productId) {
+                    this.cart = this.cart.filter(item => item.product.id !== productId);
+                    this.showToast("Product removed from cart.");
+                },
+
+                changeQty(productId, amount) {
+                    const item = this.cart.find(item => item.product.id === productId);
+                    if (item) {
+                        item.qty += amount;
+                        if (item.qty <= 0) {
+                            this.removeFromCart(productId);
+                        }
+                    }
+                },
+
+                cartTotalItems() {
+                    return this.cart.reduce((total, item) => total + item.qty, 0);
+                },
+
+                cartSubtotal() {
+                    return this.cart.reduce((total, item) => total + (item.product.price * item.qty), 0);
+                },
+
+                cartGrandTotal() {
+                    return this.cartSubtotal() + this.shippingCost;
+                },
+
+                setShipping(insideDhaka) {
+                    this.checkoutForm.insideDhaka = insideDhaka;
+                    this.shippingCost = insideDhaka ? 60 : 120;
+                },
+
+                startCheckout() {
+                    if (this.cart.length === 0) {
+                        this.showToast("Please add products to your cart before proceeding.");
+                        return;
+                    }
+                    this.isCartOpen = false;
+                    this.isCheckoutOpen = true;
+                },
+
+                // Submit Form and display invoice receipt details
+                submitOrder() {
+                    if (!this.checkoutForm.name || !this.checkoutForm.phone || !this.checkoutForm.address) {
+                        this.showToast("Please fill out all delivery fields.");
+                        return;
+                    }
+
+                    if (this.checkoutForm.paymentMethod === 'bkash') {
+                        if (!this.checkoutForm.bkashSender || !this.checkoutForm.bkashTxnId) {
+                            this.showToast("Please submit your bKash details.");
+                            return;
+                        }
+                    }
+
+                    // Create structured order code
+                    const orderId = 'ARN-' + Math.floor(100000 + Math.random() * 900000);
+                    const now = new Date();
+                    const formattedDate = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+                    this.receipt = {
+                        orderId: orderId,
+                        dateTime: formattedDate,
+                        name: this.checkoutForm.name,
+                        phone: this.checkoutForm.phone,
+                        address: this.checkoutForm.address,
+                        paymentMethod: this.checkoutForm.paymentMethod === 'cod' ? 'Cash on Delivery' : 'bKash Send Money',
+                        bkashSender: this.checkoutForm.bkashSender || 'N/A',
+                        bkashTxnId: this.checkoutForm.bkashTxnId || 'N/A',
+                        items: this.cart.map(item => ({
+                            name: item.product.name,
+                            qty: item.qty,
+                            total: item.product.price * item.qty
+                        })),
+                        grandTotal: this.cartGrandTotal()
+                    };
+
+                    this.isCheckoutOpen = false;
+                    this.isSuccessOpen = true;
+                    
+                    // Flush active cart items
+                    this.cart = [];
+                },
+
+                closeSuccessModal() {
+                    this.isSuccessOpen = false;
+                    // Restore form structure back to default state
+                    this.checkoutForm = {
+                        name: '',
+                        phone: '',
+                        address: '',
+                        insideDhaka: true,
+                        paymentMethod: 'cod',
+                        bkashSender: '',
+                        bkashTxnId: ''
+                    };
+                },
+
+                // Safety fallback copy to clipboard helper
+                copyOrderSummary() {
+                    let itemsStr = this.receipt.items.map(i => `- ${i.name} (Qty: ${i.qty}) = ৳${i.total}`).join('\n');
+                    let summaryText = `--- AREN STORE™ ORDER RECEIPT ---\n` +
+                                      `Order ID: ${this.receipt.orderId}\n` +
+                                      `Date: ${this.receipt.dateTime}\n\n` +
+                                      `Customer: ${this.receipt.name}\n` +
+                                      `Phone: ${this.receipt.phone}\n` +
+                                      `Address: ${this.receipt.address}\n\n` +
+                                      `Products:\n${itemsStr}\n\n` +
+                                      `Payment Method: ${this.receipt.paymentMethod}\n` +
+                                      `Total Payable: ৳${this.receipt.grandTotal}\n\n` +
+                                      `Please verify! I am sending the receipt screenshot now!`;
+
+                    const el = document.createElement('textarea');
+                    el.value = summaryText;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+
+                    this.showToast("Receipt details copied! You can now paste and send inside the Messenger chat.");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
